@@ -1,0 +1,25 @@
+{
+  "name": "mytest01",
+  "version": "0.5.0",
+  "description": "my first facebook bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "hehehehe"
+  },
+  "repository": {
+    "type": "git",
+    "url": "add later"
+  },
+  "keywords": [
+    "bot",
+    "test01"
+  ],
+  "author": "matheus",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "request": "^2.81.0",
+    "pg": "6.x"
+  }
+}
