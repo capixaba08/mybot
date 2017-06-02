@@ -71,11 +71,12 @@ function receivedMessage(event) {
     //another chunk of data has been recieved, so append it to `str`
     response.on('data', function (chunk) {
       str += chunk;
+      console.log("e o DATA ehhhh....   " +str+ " e foi tudo");
     });
 
     //the whole response has been recieved, so we just print it out here
     response.on('end', function () {
-      console.log("e o resultado ehhhh....   " +str+ " e foi tudo");
+      console.log("e o DATA + END ehhhh....   " +str+ " e foi tudo");
     });
   }
 
