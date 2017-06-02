@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
 app.get('/', function (req, res) {
-    res.send('Hello Youtube!')
+    res.send('Hello Everyone! I am a bot!')
 })
 
 app.post('/webhook', function (req, res) {
