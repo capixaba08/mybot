@@ -73,7 +73,7 @@ function receivedMessage(event) {
 
     //the whole response has been recieved, so we just print it out here
     response.on('end', function () {
-      console.log(str);
+      console.log("e o resultado ehhhh....   " +str);
     });
   }
 
