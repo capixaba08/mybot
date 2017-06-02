@@ -60,7 +60,8 @@ function receivedMessage(event) {
   //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
   var options = {
     host: 'www.random.org',
-    path: '/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
+    path: '/api/query?v=20150910&query=ola&lang=pt-br&sessionId=7684522f-3e0c-49bf-b269-efd6ae3e4977&timezone=2017-06-02T19:42:04-0300';
+    headers: {' Authorization': 'Bearer e095ccbab11b4a6297c0f6cb460f08a7'}
   };
 
   callback = function(response) {
