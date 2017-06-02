@@ -62,9 +62,29 @@ function receivedMessage(event) {
   var options = {
     host: 'https://api.api.ai',
     path: '/api/query?v=20150910&query=ola&lang=pt-br&sessionId=7684522f-3e0c-49bf-b269-efd6ae3e4977&timezone=2017-06-02T19:42:04-0300',
-    headers: {'Authorization': 'Bearer e095ccbab11b4a6297c0f6cb460f08a7'}
+    headers: {'Authorization': 'Bearer e095ccbab11b4a6297c0f6cb460f08a7',
+    method: 'GET'}
   };
+  var req = http.request(options, function(res) {
+    console.log('STATUS: ' + res.statusCode);
+    console.log('HEADERS: ' + JSON.stringify(res.headers));
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      console.log('BODY: ' + chunk);
+    });
+  });  
+  
+  req.on('error', function(e) {
+    console.log('problem with request: ' + e.message);
+  });
+
+  // write data to request body
+  req.write('data\n');
+  req.write('data\n');
+  req.end();
+
   console.log("SAIU!!!!");
+/*
   callback = function(response) {
     var str = '';
 
@@ -81,7 +101,7 @@ function receivedMessage(event) {
   }
 
   http.request(options, callback).end();
-
+*/
   console.log("Consulta base de dados SQL.... ID = " +senderID );
 
   /*var pg = require('pg');
