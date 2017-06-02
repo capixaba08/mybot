@@ -58,7 +58,7 @@ function receivedMessage(event) {
 
   console.log("Consulta base de dados SQL.... ID = " +senderID );
 
-  var pg = require('pg');
+  /*var pg = require('pg');
   var query = "SELECT * FROM customers where id = ";
   query += senderID;
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
@@ -80,7 +80,7 @@ function receivedMessage(event) {
          } else console.log("User " + senderID + " found!"); }
     });
   });
-
+  */
   console.log("Received message for user %d and page %d at %d with message:", 
     senderID, recipientID, timeOfMessage);
   console.log(JSON.stringify(message));
