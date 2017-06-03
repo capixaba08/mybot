@@ -60,7 +60,7 @@ function receivedMessage(event) {
   var jsonResponse;  
   var app = apiai("e095ccbab11b4a6297c0f6cb460f08a7");
 
-  var responseAPI;
+  var strResponse = "";
   console.log("Event.message = " + message.text);
   var request = app.textRequest(message.text, {
       sessionId: senderID
@@ -68,7 +68,6 @@ function receivedMessage(event) {
 
   request.on('response', function(response) {
       console.log(response);
-      responseAPI = response;
   });
 
   request.on('error', function(error) {
@@ -109,9 +108,8 @@ function receivedMessage(event) {
   console.log(JSON.stringify(message));
 
   var messageId = message.mid;
-  console.log("Message text = ");
-  var messageText = responseAPI.result.fulfillment.messages[0]['speech'];
 
+  var messageText = message.text;
   var messageAttachments = message.attachments;
 
   if (messageText) {
