@@ -68,8 +68,7 @@ function receivedMessage(event) {
   request.on('response', function(response) {
       console.log("Inicio... ");
       console.log(response);
-      strResponse = response;
-      jsonResponse = JSON.parse(strResponse);
+      console.log("ID =" + response.id);
   });
 
   request.on('error', function(error) {
