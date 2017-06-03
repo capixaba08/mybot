@@ -65,7 +65,7 @@ function receivedMessage(event) {
 
   request.on('response', function(response) {
       console.log("Inicio = "+response);
-      var jsonResponse = JSON.parse(response);
+      //var jsonResponse = JSON.parse(response);
   });
 
   request.on('error', function(error) {
