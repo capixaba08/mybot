@@ -109,9 +109,9 @@ function receivedMessage(event) {
   console.log(JSON.stringify(message));
 
   var messageId = message.mid;
-
+  console.log("Message text = ");
   var messageText = responseAPI.result.fulfillment.messages[0]['speech'];
-  
+
   var messageAttachments = message.attachments;
 
   if (messageText) {
