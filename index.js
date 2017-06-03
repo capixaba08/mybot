@@ -109,7 +109,7 @@ function receivedMessage(event) {
 
   var messageId = message.mid;
 
-  var messageText = message.text;
+  var messageText = response.result.fulfillment.speech;
   var messageAttachments = message.attachments;
 
   if (messageText) {
