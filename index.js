@@ -61,8 +61,8 @@ function receivedMessage(event) {
   var app = apiai("e095ccbab11b4a6297c0f6cb460f08a7");
 
   var strResponse = "";
-  console.log("Event.message = " + event.message);
-  var request = app.textRequest(event.message, {
+  console.log("Event.message = " + message.text);
+  var request = app.textRequest(message.text, {
       sessionId: senderID
   });
 
