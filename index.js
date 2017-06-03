@@ -66,7 +66,7 @@ function receivedMessage(event) {
 
   request.on('response', function(response) {
       console.log("Inicio... ");
-      console.log(response);
+      console.log(response.toString());
       jsonResponse = JSON.parse(response);
   });
 
