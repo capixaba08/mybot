@@ -110,7 +110,8 @@ function receivedMessage(event) {
 
   var messageId = message.mid;
 
-  var messageText = result.fulfillment.messages[0]['speech'];
+  var messageText = responseAPI.result.fulfillment.messages[0]['speech'];
+  
   var messageAttachments = message.attachments;
 
   if (messageText) {
