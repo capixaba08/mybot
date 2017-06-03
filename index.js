@@ -57,6 +57,7 @@ function receivedMessage(event) {
   var message = event.message;
 
   var apiai = require('apiai');
+  var jsonResponse;  
   var app = apiai("e095ccbab11b4a6297c0f6cb460f08a7");
 
   var request = app.textRequest('ola', {
@@ -64,8 +65,9 @@ function receivedMessage(event) {
   });
 
   request.on('response', function(response) {
-      console.log("Inicio = "+response);
-      //var jsonResponse = JSON.parse(response);
+      console.log("Inicio... ");
+      console.log(response);
+      jsonResponse = JSON.parse(response);
   });
 
   request.on('error', function(error) {
