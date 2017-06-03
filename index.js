@@ -57,7 +57,7 @@ function receivedMessage(event) {
   var message = event.message;
 
   var apiai = require('apiai');
-
+  var jsonResponse;  
   var app = apiai("e095ccbab11b4a6297c0f6cb460f08a7");
 
   var request = app.textRequest('ola', {
@@ -66,6 +66,7 @@ function receivedMessage(event) {
 
   request.on('response', function(response) {
       console.log(response);
+      jsonResponse = JSON.parse(response);
   });
 
   request.on('error', function(error) {
@@ -73,6 +74,8 @@ function receivedMessage(event) {
   });
 
   request.end();  
+
+  
 
   /*//The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
   console.log("ENTROU!!!!");
