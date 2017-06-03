@@ -69,7 +69,62 @@ function receivedMessage(event) {
 
   request.on('response', function(response) {
       console.log(response);
-      jsonResponse = response;
+
+      console.log("Consulta base de dados SQL.... ID = " +senderID );
+
+        /*var pg = require('pg');
+        var query = "SELECT * FROM customers where id = ";
+        query += senderID;
+        pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+          client.query(query, function(err, result) {
+            done();
+            if (err)
+            { console.error(err); response.send("Error " + err); }
+            else
+            //{ response.render('pages/db', {results: result.rows} ); }
+            {
+              if (result.rowCount == 0) 
+              {
+                  query = "INSERT INTO customers VALUES (" + senderID + ", 'Usuário', current_date, '', '')";
+                  client.query(query, function(err, result) {
+                      done();
+                      if (err) { console.error(err); response.send("Error " + err);}
+                      else { console.log ("User " + senderID + " added!");}
+                  }); 
+              } else console.log("User " + senderID + " found!"); }
+          });
+        });
+        */
+
+
+        console.log("Received message for user %d and page %d at %d with message:", 
+          senderID, recipientID, timeOfMessage);
+        console.log(JSON.stringify(message));
+
+        var messageId = message.mid;
+
+        var messageText = message.text;
+
+        messageText = response.result.fulfillment.messages[0]['speech'];
+
+        var messageAttachments = message.attachments;
+
+        if (messageText) {
+
+          // If we receive a text message, check to see if it matches a keyword
+          // and send back the example. Otherwise, just echo the text we received.
+          switch (messageText) {
+            case 'generic':
+              sendGenericMessage(senderID);
+              break;
+
+            default:
+              sendTextMessage(senderID, messageText);
+          }
+        } else if (messageAttachments) {
+          sendTextMessage(senderID, "Message with attachment received");
+        }  
+
   });
 
   request.on('error', function(error) {
@@ -78,60 +133,7 @@ function receivedMessage(event) {
 
   request.end();  
 
-  console.log("Consulta base de dados SQL.... ID = " +senderID );
-
-  /*var pg = require('pg');
-  var query = "SELECT * FROM customers where id = ";
-  query += senderID;
-  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-    client.query(query, function(err, result) {
-      done();
-      if (err)
-       { console.error(err); response.send("Error " + err); }
-      else
-       //{ response.render('pages/db', {results: result.rows} ); }
-       {
-         if (result.rowCount == 0) 
-         {
-             query = "INSERT INTO customers VALUES (" + senderID + ", 'Usuário', current_date, '', '')";
-             client.query(query, function(err, result) {
-                 done();
-                 if (err) { console.error(err); response.send("Error " + err);}
-                 else { console.log ("User " + senderID + " added!");}
-            }); 
-         } else console.log("User " + senderID + " found!"); }
-    });
-  });
-  */
-
-
-  console.log("Received message for user %d and page %d at %d with message:", 
-    senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
-
-  var messageId = message.mid;
-
-  var messageText = message.text;
-
-  messageText = jsonResponse.result.fulfillment.messages[0]['speech'];
-
-  var messageAttachments = message.attachments;
-
-  if (messageText) {
-
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
-    switch (messageText) {
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
-    }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
-  }
+  
 }
 
 function sendGenericMessage(recipientId, messageText) {
