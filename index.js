@@ -57,16 +57,42 @@ function receivedMessage(event) {
   var message = event.message;
 
   var apiai = require('apiai');
-  var jsonResponse;  
+    
   var app = apiai("e095ccbab11b4a6297c0f6cb460f08a7");
 
-  var request = app.textRequest('ola', {
+  var request = app.textRequest(message.text, {
       sessionId: '7684522f-3e0c-49bf-b269-efd6ae3e4977'
   });
 
   request.on('response', function(response) {
       console.log(response);
-      jsonResponse = JSON.parse(response);
+
+    console.log("Received message for user %d and page %d at %d with message:", 
+      senderID, recipientID, timeOfMessage);
+    console.log(JSON.stringify(message));
+
+    var messageId = message.mid;
+
+    var messageText = message.text;
+    var messageAttachments = message.attachments;
+
+    if (messageText) {
+
+      // If we receive a text message, check to see if it matches a keyword
+      // and send back the example. Otherwise, just echo the text we received.
+      switch (messageText) {
+        case 'generic':
+          sendGenericMessage(senderID);
+          break;
+
+        default:
+          sendTextMessage(senderID, messageText);
+      }
+    } else if (messageAttachments) {
+      sendTextMessage(senderID, "Message with attachment received");
+    }    
+
+
   });
 
   request.on('error', function(error) {
@@ -149,30 +175,7 @@ function receivedMessage(event) {
   */
 
 
-  console.log("Received message for user %d and page %d at %d with message:", 
-    senderID, recipientID, timeOfMessage);
-  console.log(JSON.stringify(message));
-
-  var messageId = message.mid;
-
-  var messageText = message.text;
-  var messageAttachments = message.attachments;
-
-  if (messageText) {
-
-    // If we receive a text message, check to see if it matches a keyword
-    // and send back the example. Otherwise, just echo the text we received.
-    switch (messageText) {
-      case 'generic':
-        sendGenericMessage(senderID);
-        break;
-
-      default:
-        sendTextMessage(senderID, messageText);
-    }
-  } else if (messageAttachments) {
-    sendTextMessage(senderID, "Message with attachment received");
-  }
+  
 }
 
 function sendGenericMessage(recipientId, messageText) {
