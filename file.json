@@ -1,0 +1,61 @@
+{
+  "id": "aacc200e-0cb5-4fa7-8653-40a40a2aecaf",
+  "timestamp": "2017-06-03T00:44:26.406Z",
+  "lang": "pt-br",
+  "result": {
+    "source": "agent",
+    "resolvedQuery": "ola",
+    "action": "getProductsList",
+    "actionIncomplete": false,
+    "parameters": {
+      "greetings-hello": "Ola"
+    },
+    "contexts": [
+      {
+        "name": "order-hamburger-pending",
+        "parameters": {
+          "greetings-hello.original": "ola",
+          "greetings-hello": "Ola"
+        },
+        "lifespan": 5
+      },
+      {
+        "name": "order-drink-pending",
+        "parameters": {
+          "greetings-hello.original": "ola",
+          "greetings-hello": "Ola"
+        },
+        "lifespan": 5
+      },
+      {
+        "name": "greetings",
+        "parameters": {
+          "greetings-hello.original": "ola",
+          "greetings-hello": "Ola"
+        },
+        "lifespan": 5
+      }
+    ],
+    "metadata": {
+      "intentId": "888afaa0-6c74-49c7-93af-3d6baefdf71e",
+      "webhookUsed": "false",
+      "webhookForSlotFillingUsed": "false",
+      "intentName": "greetings-hello"
+    },
+    "fulfillment": {
+      "speech": "Oie",
+      "messages": [
+        {
+          "type": 0,
+          "speech": "Oie"
+        }
+      ]
+    },
+    "score": 1.0
+  },
+  "status": {
+    "code": 200,
+    "errorType": "success"
+  },
+  "sessionId": "7684522f-3e0c-49bf-b269-efd6ae3e4977"
+}
