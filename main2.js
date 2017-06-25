@@ -6,4 +6,5 @@
 // Define to JSON type
  var jsonContent = JSON.parse(contents);
  console.log("ID = "+jsonContent.id + "  Speech = " + jsonContent.result.fulfillment.messages[0]['speech']);
+ console.log("Action = " + jsonContent.result.action);
  console.log("\n *EXIT* \n");
