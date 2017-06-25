@@ -50,35 +50,6 @@ app.post('/webhook', function (req, res) {
   }
 });
   
-function runAction (response, action) {
-  console.log("Action = " + action);
-  console.log("Response = " + response.result.action);
-  var pg = require('pg');
-  var query = "SELECT * FROM products";
-  var strReturn = "";
-  pg.connect(process.env.DATABASE_URL, function(err, client) {
-    client.query('SELECT * FROM products;')
-    .on('row', function(row) { 
-        console.log(JSON.stringify(row));
-        console.log(row.id + "  " + row.name + "  R$" + row.price);
-        strReturn += row.id + "  " + row.name + "  R$" + row.price;
-      });
-  });
-  return strReturn;
-
-  /*  client.query(query, function(err, result) {
-      done();
-      if (err) {
-        console.error(err); response.send("Error " + err); }
-      else
-      //{ response.render('pages/db', {results: result.rows} ); }
-        for (var i = 0; i < result.rowCount; i++) {
-          console.log ("Result" + result.rows[i]); } 
-    });
-  });
-  */
-}
-
 function receivedMessage(event) {
   var senderID = event.sender.id;
   var recipientID = event.recipient.id;
@@ -86,46 +57,106 @@ function receivedMessage(event) {
   var message = event.message;
 
   var apiai = require('apiai');
-  var jsonResponse;  
+    
   var app = apiai("e095ccbab11b4a6297c0f6cb460f08a7");
 
+<<<<<<< HEAD
+  var request = app.textRequest(message.text, {
+      sessionId: '7684522f-3e0c-49bf-b269-efd6ae3e4977'
+=======
   var strResponse = "";
 
   console.log("Event.message = " + message.text);
   var request = app.textRequest(message.text, {
       sessionId: senderID
+>>>>>>> 6046c3be5b1cadbcf208c053b08987078edf1679
   });
 
   request.on('response', function(response) {
       console.log(response);
-      console.log("Received message for user %d and page %d at %d with message:", 
-        senderID, recipientID, timeOfMessage);
-      console.log(JSON.stringify(message));
 
-      var messageId = message.mid;
-      var messageText = message.text;
-      messageText = response.result.fulfillment.messages[0]['speech'];
-      //messageText += "\n";
-      
-      if (response.result.action != '') {
-        messageText += runAction(response, response.result.action);
+<<<<<<< HEAD
+    console.log("Received message for user %d and page %d at %d with message:", 
+      senderID, recipientID, timeOfMessage);
+    console.log(JSON.stringify(message));
+
+    var messageId = message.mid;
+
+    var messageText = message.text;
+    var messageAttachments = message.attachments;
+
+    if (messageText) {
+
+      // If we receive a text message, check to see if it matches a keyword
+      // and send back the example. Otherwise, just echo the text we received.
+      switch (messageText) {
+        case 'generic':
+          sendGenericMessage(senderID);
+          break;
+
+        default:
+          sendTextMessage(senderID, messageText);
       }
-      var messageAttachments = message.attachments;
-      if (messageText) {
+    } else if (messageAttachments) {
+      sendTextMessage(senderID, "Message with attachment received");
+    }    
 
-        // If we receive a text message, check to see if it matches a keyword
-        // and send back the example. Otherwise, just echo the text we received.
-        switch (messageText) {
-          case 'generic':
-            sendGenericMessage(senderID);
-            break;
+=======
+      console.log("Consulta base de dados SQL.... ID = " +senderID );
 
-          default:
-            sendTextMessage(senderID, messageText);
-        }
-      } else if (messageAttachments) {
-        sendTextMessage(senderID, "Message with attachment received");
-      }  
+        /*var pg = require('pg');
+        var query = "SELECT * FROM customers where id = ";
+        query += senderID;
+        pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+          client.query(query, function(err, result) {
+            done();
+            if (err)
+            { console.error(err); response.send("Error " + err); }
+            else
+            //{ response.render('pages/db', {results: result.rows} ); }
+            {
+              if (result.rowCount == 0) 
+              {
+                  query = "INSERT INTO customers VALUES (" + senderID + ", 'Usuário', current_date, '', '')";
+                  client.query(query, function(err, result) {
+                      done();
+                      if (err) { console.error(err); response.send("Error " + err);}
+                      else { console.log ("User " + senderID + " added!");}
+                  }); 
+              } else console.log("User " + senderID + " found!"); }
+          });
+        });
+        */
+
+
+        console.log("Received message for user %d and page %d at %d with message:", 
+          senderID, recipientID, timeOfMessage);
+        console.log(JSON.stringify(message));
+
+        var messageId = message.mid;
+
+        var messageText = message.text;
+
+        messageText = response.result.fulfillment.messages[0]['speech'];
+
+        var messageAttachments = message.attachments;
+
+        if (messageText) {
+
+          // If we receive a text message, check to see if it matches a keyword
+          // and send back the example. Otherwise, just echo the text we received.
+          switch (messageText) {
+            case 'generic':
+              sendGenericMessage(senderID);
+              break;
+
+            default:
+              sendTextMessage(senderID, messageText);
+          }
+        } else if (messageAttachments) {
+          sendTextMessage(senderID, "Message with attachment received");
+        }  
+>>>>>>> 6046c3be5b1cadbcf208c053b08987078edf1679
 
   });
 
@@ -136,6 +167,83 @@ function receivedMessage(event) {
   request.end();  
 
   
+<<<<<<< HEAD
+
+  /*//The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
+  console.log("ENTROU!!!!");
+  var options = {
+    host: 'https://api.api.ai',
+    path: '/api/query?v=20150910&query=ola&lang=pt-br&sessionId=7684522f-3e0c-49bf-b269-efd6ae3e4977&timezone=2017-06-02T19:42:04-0300',
+    headers: {'Authorization': 'Bearer e095ccbab11b4a6297c0f6cb460f08a7'},
+    method: 'GET'
+  };
+  var req = http.request(options, function(res) {
+    console.log('STATUS: ' + res.statusCode);
+    console.log('HEADERS: ' + JSON.stringify(res.headers));
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+      console.log('BODY: ' + chunk);
+    });
+  });  
+  
+  req.on('error', function(e) {
+    console.log('problem with request: ' + e.message);
+  });
+
+  // write data to request body
+  req.write('data\n');
+  req.write('data\n');
+  req.end();
+
+  console.log("SAIU!!!!");
+/*
+  callback = function(response) {
+    var str = '';
+
+    //another chunk of data has been recieved, so append it to `str`
+    response.on('data', function (chunk) {
+      str += chunk;
+      console.log("e o DATA ehhhh....   " +str+ " e foi tudo");
+    });
+
+    //the whole response has been recieved, so we just print it out here
+    response.on('end', function () {
+      console.log("e o DATA + END ehhhh....   " +str+ " e foi tudo");
+    });
+  }
+
+  http.request(options, callback).end();
+*/
+  console.log("Consulta base de dados SQL.... ID = " +senderID );
+
+  /*var pg = require('pg');
+  var query = "SELECT * FROM customers where id = ";
+  query += senderID;
+  pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+    client.query(query, function(err, result) {
+      done();
+      if (err)
+       { console.error(err); response.send("Error " + err); }
+      else
+       //{ response.render('pages/db', {results: result.rows} ); }
+       {
+         if (result.rowCount == 0) 
+         {
+             query = "INSERT INTO customers VALUES (" + senderID + ", 'Usuário', current_date, '', '')";
+             client.query(query, function(err, result) {
+                 done();
+                 if (err) { console.error(err); response.send("Error " + err);}
+                 else { console.log ("User " + senderID + " added!");}
+            }); 
+         } else console.log("User " + senderID + " found!"); }
+    });
+  });
+  */
+
+
+  
+=======
+>>>>>>> 6046c3be5b1cadbcf208c053b08987078edf1679
 }
 
 function sendGenericMessage(recipientId, messageText) {
